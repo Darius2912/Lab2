@@ -1,1 +1,54 @@
-<p>categorias works!</p>
+<div class="pagina">
+    <div class="encabezado">
+        <h2>Categorías</h2>
+        @if (authService.esAdmin() && !mostrarFormulario()) {
+            <button class="btn-primario" (click)="nueva()">+ Nueva Categoría</button>
+        }
+    </div>
+
+    @if (mensaje()) {
+        <p class="exito">{{ mensaje() }}</p>
+    }
+    @if (error()) {
+        <p class="error">{{ error() }}</p>
+    }
+
+    @if (mostrarFormulario()) {
+        <app-categoria-form
+            [categoria]="categoriaEditando()"
+            (cancelar)="cerrarFormulario()"
+            (guardar)="guardar($event)" />
+    }
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                @if (authService.esAdmin()) {
+                    <th>Acciones</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (categoria of categorias(); track categoria.id) {
+                <tr>
+                    <td>{{ categoria.id }}</td>
+                    <td>{{ categoria.nombre }}</td>
+                    <td>{{ categoria.descripcion }}</td>
+                    @if (authService.esAdmin()) {
+                        <td>
+                            <button class="btn-editar" (click)="editar(categoria)">Editar</button>
+                            <button class="btn-secundario" (click)="eliminar(categoria)">Eliminar</button>
+                        </td>
+                    }
+                </tr>
+            }@empty {
+                <tr>
+                    <td colspan="4">No hay categorías disponibles.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

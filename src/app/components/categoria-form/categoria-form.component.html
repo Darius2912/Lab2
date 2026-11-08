@@ -1,1 +1,19 @@
-<p>categoria-form works!</p>
+<form [formGroup]="form" (ngSubmit)="enviar()">
+    <h3>{{ categoria()? 'Editar Categoria' : 'Nueva Categoria' }}</h3>
+
+    <label for="nombre">Nombre</label>
+    <input id="nombre" type="text" formControlName="nombre">
+    @if (form.controls.nombre.touched && form.controls.nombre.invalid){
+        <small class="error">El nombre es obligatorio</small>
+    }
+
+    <label for="descripcion">Descripción</label>
+    <textarea id="descripcion" formControlName="descripcion" rows="3"></textarea>
+
+    <div class="botones">
+        <button type="submit" class="btn-primario">
+            {{ categoria()? 'Actualizar' : 'Crear'}}
+        </button>
+        <button type="button" class="btn-secundario" (click)="cancelar.emit()">Cancelar</button>
+    </div>
+</form>

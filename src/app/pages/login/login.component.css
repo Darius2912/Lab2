@@ -1,0 +1,27 @@
+.contenedor {
+    max-width: 360px;
+    margin: 60px auto;
+    padding: 24px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+input {
+    padding: 8px;
+}
+
+button {
+    margin-top: 12px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.error {
+    color: #c62828;
+}

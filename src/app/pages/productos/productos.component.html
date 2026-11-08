@@ -1,1 +1,68 @@
-<p>productos works!</p>
+<div class="pagina">
+    <div class="encabezado">
+        <h2>Productos</h2>
+        @if (authService.esAdmin() && !mostrarFormulario()) {
+            <button class="btn-primario" (click)="nuevo()"
+            [disabled]="categorias().length === 0">
+            + Nuevo producto
+            </button>
+        }
+    </div>
+
+    @if (authService.esAdmin() && categorias().length === 0) {
+        <p class=" error">Primero debe crear al menos una categoría</p>
+    }
+    @if (mensaje()) {
+        <p class="exito">{{mensaje() }}</p>
+    }
+    @if (error())  {
+        <p class="error">{{error () }}</p>
+    }
+
+    @if (mostrarFormulario()) {
+        <app-producto-form
+        [producto]="productoEditando()"
+        [categorias]="categorias()"
+        (guardar)="guardar($event)"
+        (cencelar)="cerrarFormulario()" />
+    }
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Categoría</th>
+                @if (authService.esAdmin()) {
+                    <th>Acciones</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (producto of productos(); track producto.id) {
+                <tr>
+                    <td>{{ producto.id }}</td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.descripcion }}</td>
+                    <td>{{ producto.precio | currency:'CRC':'symbol-narrow' }}</td>
+                    <td>{{producto.cantidad}}</td> 
+                    <td>{{producto.categoria.nombre}}
+                    @if (authService.esAdmin()) {
+                        <td>
+                            <button class="btn-editar"
+                            (click)="editar(producto)">Editar</button>
+                            <button class="btn-eliminar" (click)="eliminar(producto)">Eliminar</button>
+                        </td>
+                    }
+               </tr>
+              }  @empty {
+                <tr>
+                    <td colspan="7">No hay productos registrados</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

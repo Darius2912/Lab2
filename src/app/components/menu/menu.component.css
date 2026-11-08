@@ -1,0 +1,25 @@
+nav {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: #263238;
+    color: white;
+}
+
+.enlaces a {
+    color: white;
+    text-decoration: none;
+    margin-right: 16px;
+}
+
+.enlaces a.activo {
+    font-weight: bold;
+    border-bottom: 2px solid white;
+}
+
+.usuario{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
